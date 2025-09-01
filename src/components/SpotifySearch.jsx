@@ -1,8 +1,6 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 import { CgPlayButtonO } from 'react-icons/cg';
-import { HiStopCircle } from 'react-icons/hi2';
-import { BsPlayCircleFill } from 'react-icons/bs';
 
 // eslint-disable-next-line react/prop-types
 const App = ({ setCurrentSong }) => {
@@ -10,15 +8,13 @@ const App = ({ setCurrentSong }) => {
     const [canciones, setCanciones] = useState([]);
 
     const handleSearch = async (e) => {
-        if (e.key === 'Enter') {
-            e.preventDefault();
-            if (cancion.trim() === '') {
-                alert('Debes ingresar algo');
-                return;
-            }
-            setCancion('');
-            await getSong(cancion);
+        e.preventDefault();
+        if (cancion.trim() === '') {
+            alert('Debes ingresar algo');
+            return;
         }
+        await getSong(cancion);
+        setCancion('');
     };
 
     const options = {
@@ -54,12 +50,11 @@ const App = ({ setCurrentSong }) => {
 
     return (
         <StyledContainer>
-            <StyledForm>
+            <StyledForm onSubmit={handleSearch}>
                 <StyledInput
                     type="text"
                     value={cancion}
                     onChange={(e) => setCancion(e.target.value)}
-                    onKeyPress={handleSearch}
                     placeholder="¿Qué te apetece escuchar?"
                 />
             </StyledForm>
